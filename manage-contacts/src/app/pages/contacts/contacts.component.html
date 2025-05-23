@@ -4,30 +4,41 @@
   <input [(ngModel)]="search" placeholder="Search..." />
   <button (click)="onSearch()">Search</button>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>Notes</th>
-        <!-- new column for the action button -->
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let contact of contacts">
-  <td><input [(ngModel)]="contact.name" /></td>
-  <td><input [(ngModel)]="contact.phone" /></td>
-  <td><input [(ngModel)]="contact.address" /></td>
-  <td><input [(ngModel)]="contact.notes" /></td>
-  <td>
-    <button (click)="onSave(contact)">Save</button>
-  </td>
-</tr>
-    </tbody>
-  </table>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th><th>Phone</th><th>Address</th><th>Notes</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contact of contacts">
+      <td>
+        <input *ngIf="editingContactId === contact._id" [(ngModel)]="contact.name" />
+        <span *ngIf="editingContactId !== contact._id">{{ contact.name }}</span>
+      </td>
+      <td>
+        <input *ngIf="editingContactId === contact._id" [(ngModel)]="contact.phone" />
+        <span *ngIf="editingContactId !== contact._id">{{ contact.phone }}</span>
+      </td>
+      <td>
+        <input *ngIf="editingContactId === contact._id" [(ngModel)]="contact.address" />
+        <span *ngIf="editingContactId !== contact._id">{{ contact.address }}</span>
+      </td>
+      <td>
+        <input *ngIf="editingContactId === contact._id" [(ngModel)]="contact.notes" />
+        <span *ngIf="editingContactId !== contact._id">{{ contact.notes }}</span>
+      </td>
+      <td>
+        <button *ngIf="canEdit(contact._id) && editingContactId !== contact._id" (click)="startEditing(contact._id)">Edit</button>
+        <button *ngIf="editingContactId === contact._id" (click)="onSave(contact)">Save</button>
+        <button *ngIf="editingContactId === contact._id" (click)="cancelEditing(contact._id)">Cancel</button>
+        <span *ngIf="lockedContacts.get(contact._id) && lockedContacts.get(contact._id) !== currentUser.id" style="color: red;">
+          Locked by another user
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
   <div class="pagination">
     <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>

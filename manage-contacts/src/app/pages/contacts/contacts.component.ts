@@ -26,8 +26,6 @@ export class ContactsComponent {
     this.contactService.getContacts(this.currentPage, this.search).subscribe({
       next: (res: any) => {
         this.contacts = res.data;
-        console.log('res.contacts======>',res.data)
-        console.log('this.contacts======>',this.contacts)
         this.totalPages = res.totalPages;
       },
     });

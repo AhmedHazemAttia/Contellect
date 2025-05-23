@@ -1,17 +1,18 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import contactRoutes from './routes/contactRoutes';
+import authRoutes from './routes/authRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = 'mongodb://localhost:27017/contellect';
+const MONGO_URI = process.env.MONGO_URI || '';
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
 app.use('/api/contacts', contactRoutes);
+app.use('/api/auth', authRoutes);
 
 mongoose.connect(MONGO_URI)
   .then(() => {

@@ -1,15 +1,15 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 interface IContact extends Document {
+  name: string;
   phone: string;
-  number: string;
   address: string;
   notes?: string; 
 }
 
 const ContactSchema: Schema = new Schema({
+  name: { type: String, required: true },
   phone: { type: String, required: true },
-  number: { type: String, required: true },
   address: { type: String, required: true },
   notes: { type: String, required: false }
 });

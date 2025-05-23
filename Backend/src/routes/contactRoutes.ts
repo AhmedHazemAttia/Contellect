@@ -1,5 +1,5 @@
 import express from 'express';
-import Contact from '../models/contact';
+import Contact from '../models/Contact';
 import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
@@ -43,11 +43,27 @@ router.post('/add',
   }
 });
 
-//TODO: Pagination 5 / page
 router.get('/get', async (req, res) => {
+
   try {
-    const contacts = await Contact.find();
-    res.json(contacts);
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = 5; 
+
+    const skip = (page - 1) * limit;
+    const total = await Contact.countDocuments();
+
+    const contacts = await Contact.find()
+      .skip(skip)
+      .limit(limit)
+      .exec();
+
+    res.json({
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      data: contacts,
+    });
   } catch (error) {
     res.status(500).json({ message: 'Failed to get contacts', error });
   }

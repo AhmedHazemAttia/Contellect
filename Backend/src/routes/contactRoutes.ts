@@ -45,29 +45,25 @@ router.post('/add',
 });
 
 router.get('/get', async (req, res) => {
-
   try {
     const page = parseInt(req.query.page as string) || 1;
-    const limit = 5; 
-
+    const limit = 5;
     const skip = (page - 1) * limit;
 
-    const { name, phone, address } = req.query;
+    const search = req.query.search as string;
 
     const filter: any = {};
-    if (name) {
-      filter.name = { $regex: name, $options: 'i' }; 
-    }
-    if (phone) {
-      filter.phone = { $regex: phone, $options: 'i' };
-    }
-    if (address) {
-      filter.address = { $regex: address, $options: 'i' };
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { phone: { $regex: search, $options: 'i' } },
+        { address: { $regex: search, $options: 'i' } }
+      ];
     }
 
     const total = await Contact.countDocuments(filter);
     const contacts = await Contact.find(filter)
-      .skip(skip) 
+      .skip(skip)
       .limit(limit)
       .exec();
 
@@ -82,6 +78,7 @@ router.get('/get', async (req, res) => {
     res.status(500).json({ message: 'Failed to get contacts', error });
   }
 });
+
 
 router.put('/:id',
   [

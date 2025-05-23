@@ -1,9 +1,8 @@
 <div class="container">
   <h2>Contact List</h2>
 
- <input [(ngModel)]="search" placeholder="Search..." />
-<button (click)="onSearch()">Search</button> 
-
+  <input [(ngModel)]="search" placeholder="Search..." />
+  <button (click)="onSearch()">Search</button>
 
   <table>
     <thead>
@@ -12,15 +11,21 @@
         <th>Phone</th>
         <th>Address</th>
         <th>Notes</th>
+        <!-- new column for the action button -->
+        <th>Actions</th>
       </tr>
     </thead>
+
     <tbody>
       <tr *ngFor="let contact of contacts">
-        <td>{{ contact.name }}</td>
-        <td>{{ contact.phone }}</td>
-        <td>{{ contact.address }}</td>
-        <td>{{ contact.notes }}</td>
-      </tr>
+  <td><input [(ngModel)]="contact.name" /></td>
+  <td><input [(ngModel)]="contact.phone" /></td>
+  <td><input [(ngModel)]="contact.address" /></td>
+  <td><input [(ngModel)]="contact.notes" /></td>
+  <td>
+    <button (click)="onSave(contact)">Save</button>
+  </td>
+</tr>
     </tbody>
   </table>
 

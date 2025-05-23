@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class ContactsService {
 
- private baseUrl = 'http://localhost:5000/api/contacts/get';
+ private baseUrl = 'http://localhost:5000/api/contacts';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +15,7 @@ export class ContactsService {
     if (search.trim()) {
       params = params.set('search', search);
     }
-    return this.http.get(this.baseUrl, { params });
+    return this.http.get(this.baseUrl + '/get', { params });
   }
 
   addContact(contact: any): Observable<any> {
@@ -23,7 +23,7 @@ export class ContactsService {
   }
 
   updateContact(id: string, contact: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, contact);
+    return this.http.put(`${this.baseUrl}/edit/${id}`, contact);
   }
 
   deleteContact(id: string): Observable<any> {

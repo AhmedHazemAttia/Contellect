@@ -80,7 +80,7 @@ router.get('/get', async (req, res) => {
 });
 
 
-router.put('/:id',
+router.put('/edit/:id',
   [
     body('name').notEmpty().withMessage('Name is required'),
     body('phone')

@@ -50,4 +50,22 @@ export class ContactsComponent {
     this.fetchContacts();
   }
 
+    onSave(contact: any): void {
+    const updatedData = {
+      name: contact.name,
+      phone: contact.phone,
+      address: contact.address,
+      notes: contact.notes || ''
+    };
+  this.contactService.updateContact(contact._id, updatedData).subscribe({
+      next: (res) => {
+        console.log('Update success:', res);
+        // You can show a toast or refresh the grid
+      },
+      error: (err) => {
+        console.error('Update failed:', err);
+        // Show an error message
+      }
+    });
+  }
 }

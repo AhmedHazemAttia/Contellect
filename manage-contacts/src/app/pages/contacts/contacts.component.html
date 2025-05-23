@@ -1,12 +1,9 @@
 <div class="container">
   <h2>Contact List</h2>
 
-  <input
-    type="text"
-    placeholder="Search by name, phone, or address"
-    [(ngModel)]="search"
-    (input)="onSearch()"
-  />
+ <input [(ngModel)]="search" placeholder="Search..." />
+<button (click)="onSearch()">Search</button> 
+
 
   <table>
     <thead>

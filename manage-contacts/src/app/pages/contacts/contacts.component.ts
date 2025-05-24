@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../services/contacts.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { WebSocketServiceService } from '../../services/web-socket-service.service';
 import { Subscription } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-contacts',
@@ -17,7 +18,8 @@ export class ContactsComponent {
 
   private contactService = inject(ContactsService);
   private wsService = inject(WebSocketServiceService);
-
+  private authService = inject(AuthService);
+  private router = inject(Router)
   contacts: any[] = [];
   currentPage = 1;
   totalPages = 1;
@@ -132,5 +134,14 @@ export class ContactsComponent {
         alert('Failed to update contact.');
       }
     });
+  }
+
+  logout(){
+    this.authService.logout()
+    this.router.navigate(['/login'])
+  }
+
+  add(){
+    this.router.navigate(['/add-contact'])
   }
 }

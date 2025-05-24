@@ -45,4 +45,9 @@
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
+
+  <div>
+    <button (click)="add()">Add New Contacts</button>
+    <button (click)="logout()">Logout</button>
+  </div>
 </div>

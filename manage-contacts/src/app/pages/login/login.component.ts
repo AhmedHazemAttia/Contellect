@@ -21,7 +21,7 @@ export class LoginComponent {
       .subscribe({
         next: (res: any) => {
           this.auth.saveToken(res.token);
-          this.router.navigate(['/contacts']);
+          this.router.navigate(['/add-contact']);
         },
         error: err => {
           this.error = 'Invalid credentials';

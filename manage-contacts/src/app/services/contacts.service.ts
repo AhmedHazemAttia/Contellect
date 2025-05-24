@@ -27,9 +27,13 @@ export class ContactsService {
     return this.http.get(this.baseUrl + '/get', { params });
   }
 
-  addContact(contact: any): Observable<any> {
-    return this.http.post(this.baseUrl, contact, this.getAuthHeaders());
-  }
+  addContact(contactData: any) {
+  return this.http.post(this.baseUrl + '/add', contactData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+}
 
   updateContact(id: string, contact: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/edit/${id}`, contact, this.getAuthHeaders());

@@ -40,6 +40,6 @@ export class ContactsService {
   }
 
   deleteContact(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
 }

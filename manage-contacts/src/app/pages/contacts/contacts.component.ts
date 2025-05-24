@@ -135,6 +135,21 @@ export class ContactsComponent {
       }
     });
   }
+  
+  onDelete(contactId: string): void {
+  const confirmDelete = confirm('Are you sure you want to delete this contact?');
+  if (!confirmDelete) return;
+
+  this.contactService.deleteContact(contactId).subscribe({
+    next: () => {
+      this.fetchContacts(); // Refresh the list
+    },
+    error: (err) => {
+      console.error('Delete failed:', err);
+      alert('Failed to delete contact.');
+    }
+  });
+}
 
   logout(){
     this.authService.logout()

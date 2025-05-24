@@ -32,6 +32,7 @@
         <button *ngIf="canEdit(contact._id) && editingContactId !== contact._id" (click)="startEditing(contact._id)">Edit</button>
         <button *ngIf="editingContactId === contact._id" (click)="onSave(contact)">Save</button>
         <button *ngIf="editingContactId === contact._id" (click)="cancelEditing(contact._id)">Cancel</button>
+        <button *ngIf="canEdit(contact._id)" (click)="onDelete(contact._id)">Delete</button>
         <span *ngIf="lockedContacts.get(contact._id) && lockedContacts.get(contact._id) !== currentUser.id" style="color: red;">
           Locked by another user
         </span>

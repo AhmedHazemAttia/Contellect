@@ -112,3 +112,9 @@ input[type="text"] {
   justify-content: space-between;
   margin-top: 2rem;
 }
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 4px;
+}

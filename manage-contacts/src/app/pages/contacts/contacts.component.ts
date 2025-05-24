@@ -24,6 +24,7 @@ export class ContactsComponent {
   currentPage = 1;
   totalPages = 1;
   search = '';
+  validationErrors: { [key: string]: { [field: string]: string } } = {};
 
   currentUser = {
     id: 'user123',
@@ -114,6 +115,31 @@ export class ContactsComponent {
 
   onSave(contact: any): void {
     if (this.editingContactId !== contact._id) return;
+
+   const errors: { [field: string]: string } = {};
+
+  if (!contact.name?.trim()) {
+    errors['name'] = 'Name is required.';
+  }
+
+  if (!contact.phone?.trim()) {
+    errors['phone'] = 'Phone is required.';
+  } else if (!/^\d{11}$/.test(contact.phone)) {
+    errors['phone'] = 'Phone must be 11 digits.';
+  }
+
+  if (!contact.address?.trim()) {
+    errors['address'] = 'Address is required.';
+  }
+
+  // If there are validation errors, store them and stop
+  if (Object.keys(errors).length > 0) {
+    this.validationErrors[contact._id] = errors;
+    return;
+  }
+
+  // No errors, clear existing ones
+  delete this.validationErrors[contact._id];
 
     const updatedData = {
       name: contact.name,
